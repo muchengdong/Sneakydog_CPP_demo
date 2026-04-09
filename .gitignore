@@ -1,0 +1,19 @@
+# 编译输出目录
+build/
+out/
+
+# 编译生成的文件
+*.exe
+*.pdb
+*.obj
+*.lib
+*.dll
+*.exp
+
+# VSCode 缓存
+.vscode/*.db
+.vscode/ipch/
+
+# 系统垃圾
+.DS_Store
+Thumbs.db
