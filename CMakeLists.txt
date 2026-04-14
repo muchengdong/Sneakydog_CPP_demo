@@ -5,7 +5,7 @@
 cmake_minimum_required(VERSION 3.15)
 
 # 项目名
-project("Helloworld" VERSION 0.0.1 LANGUAGES CXX)
+project("hellowrold_cpp" VERSION 0.0.1 LANGUAGES CXX)
 
 # 把整个项目默认的 C++ 标准设置为 C++20
 set(CMAKE_CXX_STANDARD 20)
@@ -15,25 +15,33 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # 查找 ArrayFire 包
-find_package(ArrayFire REQUIRED)
+find_package(ArrayFire  REQUIRED)
+# 查找 OpenCV 包
+find_package(OpenCV REQUIRED)
 
-if(ArrayFire_CPU_FOUND)
-    # 将源代码添加到此项目的可执行文件。
-    add_executable(Helloworld_cpu "src/Helloworld.cpp")
-    target_link_libraries(Helloworld_cpu ArrayFire::afcpu)
 
-    add_library(Helloworld_cpudll SHARED src/Helloworld.cpp)
-    target_link_libraries(Helloworld_cpudll ArrayFire::afcpu)
-endif()
+# 公共源文件
+set(COMMON_SRC
+    src/main.cpp
+    src/helloworld.cpp
+    src/helloworld.h
+)
 
-if(ArrayFire_CUDA_FOUND)
-    # 将源代码添加到此项目的可执行文件。
-    add_executable(Helloworld_cuda "src/Helloworld.cpp" )
-    target_link_libraries(Helloworld_cuda ArrayFire::afcuda)
 
-    add_library(Helloworld_cudadll SHARED src/Helloworld.cpp)
-    target_link_libraries(Helloworld_cudadll ArrayFire::afcuda)
-endif()
+add_executable(hellowrold_cpp ${COMMON_SRC})
+target_link_libraries(hellowrold_cpp PRIVATE ArrayFire::afcuda  ${OpenCV_LIBS})
+
+add_library(hellowrold_cpp_dll SHARED src/helloworld.cpp)
+target_link_libraries(hellowrold_cpp_dll PRIVATE ArrayFire::afcuda ${OpenCV_LIBS})
+
+# 项目根路径
+add_compile_definitions(PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
+
+
+# 资源拷贝
+file(COPY ${CMAKE_SOURCE_DIR}/images
+    DESTINATION ${CMAKE_BINARY_DIR})
+
 
 
 

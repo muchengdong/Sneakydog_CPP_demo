@@ -10,10 +10,11 @@ extern "C" __declspec(dllexport) int add(int a, int b)
 {
     return a + b;
 }
+namespace Sneakydog_CPP_demo
+{
+    int add2(const int a, const int b)
+    {
+        return a + b;
+    }
 
-
-int main(){
-
-    print_af_info();
-    return 0;
 }
